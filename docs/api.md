@@ -29,6 +29,20 @@
  
      var db = redis.createClient();
 
+### Abstract Clusters
+
+ Cluster is not bound to servers, cluster can be used to manage processes for processing job queues etc. Below is a minimalist example of this, simply invokes `cluster()` with no object, spawning a worker per cpu:
+ 
+      var cluster = require('cluster');
+
+      var proc = cluster().start();
+
+      if (proc.isWorker) {
+        // do things within the worker processes
+      } else {
+        // do something within the master
+      }
+
 ### Plugins
 
  A plugin simple a function that accepts the `master` process. Most plugin functions _return_ another anonymous function, allowing them to accept options, for example:
@@ -60,6 +74,8 @@
    - `backlog`  Connection backlog, defaulting to 128
    - `socket path`  Master socket path defaulting to `./`
    - `timeout` Worker shutdown timeout in milliseconds, defaulting to `60000`
+   - `title` master process title defaulting to "cluster"
+   - `worker title` worker process title defaulting to "cluster worker"
    - `user`  User id / name
    - `group`  Group id / name
 
@@ -83,10 +99,10 @@
 
  The following events are emitted, useful for plugins or general purpose logging etc.
  
-   - `start`. When the server is starting (pre-spawn)
+   - `start`. When the IPC server is prepped
    - `worker`. When a worker is spawned, passing the `worker`
-   - `listening`. When the server is listening for connections (post-spawn)
-   - `closing`. When master is gracefully shutting down
+   - `listening`. When the server is listening for connections
+   - `closing`. When master is shutting down
    - `close`. When master has completed shutting down
    - `worker killed`. When a worker has died
    - `worker exception`. Worker uncaughtException. Receives the worker and exception object

@@ -1,11 +1,12 @@
-
 # Cluster
 
  [Cluster](http://learnboost.github.com/cluster) is an extensible multi-core server manager for [node.js](http://nodejs.org).
 
 ## Installation
 
-    $ npm install cluster
+```bash
+$ npm install cluster
+```
 
 ## Features
 
@@ -33,39 +34,54 @@
 
 app.js:
 
-      var http = require('http');
+```javascript
+var http = require('http');
 
-      module.exports = http.createServer(function(req, res){
-        console.log('%s %s', req.method, req.url);
-        var body = 'Hello World';
-        res.writeHead(200, { 'Content-Length': body.length });
-        res.end(body);
-      });
+module.exports = http.createServer(function(req, res){
+  console.log('%s %s', req.method, req.url);
+  var body = 'Hello World';
+  res.writeHead(200, { 'Content-Length': body.length });
+  res.end(body);
+});
+```
 
 server.js:
 
-      var cluster = require('cluster')
-        , app = require('./app');
-      
-      cluster(app)
-        .use(cluster.logger('logs'))
-        .use(cluster.stats())
-        .use(cluster.pidfiles('pids'))
-        .use(cluster.cli())
-        .use(cluster.repl(8888))
-        .listen(3000);
+```javascript
+var cluster = require('cluster')
+  , app = require('./app');
+
+cluster(app)
+  .use(cluster.logger('logs'))
+  .use(cluster.stats())
+  .use(cluster.pidfiles('pids'))
+  .use(cluster.cli())
+  .use(cluster.repl(8888))
+  .listen(3000);
+```
 
 recommended usage: passing the path to prevent unnecessary database connections in the master process, as `./app` is only `require()`ed within the workers.
 
-      var cluster = require('cluster');
-      
-      cluster('./app')
-        .use(cluster.logger('logs'))
-        .use(cluster.stats())
-        .use(cluster.pidfiles('pids'))
-        .use(cluster.cli())
-        .use(cluster.repl(8888))
-        .listen(3000);
+```javascript
+var cluster = require('cluster');
+
+cluster('./app')
+  .use(cluster.logger('logs'))
+  .use(cluster.stats())
+  .use(cluster.pidfiles('pids'))
+  .use(cluster.cli())
+  .use(cluster.repl(8888))
+  .listen(3000);
+```
+
+## Plugins
+
+ Below are the known 3rd-party plugins for cluster:
+ 
+   - [cluster-log](https://github.com/LearnBoost/cluster-log) remote logger powered by redis
+   - [cluster-mail](https://github.com/LearnBoost/cluster-mail) email exception notifications
+   - [cluster-exception](https://github.com/3rd-eden/cluster.exception) extensive exception notifications
+   - [cluster-responsetimes](https://github.com/mnutt/cluster-responsetimes) response time statistics for cluster's REPL
 
 ## Screencasts
 
@@ -73,13 +89,17 @@ recommended usage: passing the path to prevent unnecessary database connections 
 
 ## Running Tests
 
-First:
+Install development dependencies:
 
-     $ git submodule update --init
+```bash
+$ npm install
+```
 
 Then:
 
-     $ make test
+```bash
+$ make test
+```
 
 Actively tested with node:
 

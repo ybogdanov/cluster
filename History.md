@@ -1,4 +1,59 @@
 
+0.6.4 / 2011-06-14 
+==================
+
+  * Fix for json framing. Closes #109
+
+0.6.3 / 2011-06-11 
+==================
+
+  * Added `{ color: false }` option to `debug()`
+  * Fixed; close socketpair fds when worker dies
+  * Fixed `Master#listen()` with env specific config. Closes #98
+
+0.6.2 / 2011-05-11 
+==================
+
+  * Fixed IPC for workers without a server. Closes #91
+  * Fixed `close(fd)` issue for Master without a server. Closes #89
+
+0.6.1 / 2011-04-26 
+==================
+
+  * Changed; cli commands will now signal orphaned children
+  * Changed; postpone spawning until "listening" this _should_ fix our EINVAL issue
+  * Changed; exit > 0 when trying to use the `cli()` when cluster is not running
+  * Changed; `cli()` will still operate on orphans
+
+0.6.0 / 2011-04-18 
+==================
+
+  * Added support to run cluster without a server. Closes #72
+  * Renamed titles to "cluster" and "cluster worker". closes #82
+
+0.5.7 / 2011-04-17 
+==================
+
+  * Added `lightRequests` option to `stats()`
+
+0.5.6 / 2011-04-15 
+==================
+
+  * Added; expose utils, helpful for plugins
+  * Added; default both `Master#spawn()` and `Master#remove()` to 1
+
+0.5.5 / 2011-04-05 
+==================
+
+  * Revert "Changed; demote user/group in master"
+
+0.5.4 / 2011-04-05 
+==================
+
+  * Added `title` and `worker title` settings. Closes #54
+  * Added `request complete` `stats()` event
+  * Changed; demote user/group in master
+
 0.5.3 / 2011-03-30 
 ==================
 
